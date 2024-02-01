@@ -1,9 +1,8 @@
-export const request = (url: string, options: RequestInit) => {
-  return fetch(url, Object.assign({ method: "GET" }, options))
-    .then((response) => {
-      return response.json();
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+export const request = async (url: string, options: RequestInit) => {
+  try {
+    const resp = await fetch(url, Object.assign({ method: "GET" }, options));
+    return resp.json();
+  } catch (error) {
+    console.error("Error fetching data", error);
+  }
 };

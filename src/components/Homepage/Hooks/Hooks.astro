@@ -47,7 +47,7 @@ const items = [
 
 <div class="p-4 max-w-[1200px] mx-auto waterfall-container">
   {
-    items.map((item, idx) => (
+    items.map((item) => (
       <div class={`flex flex-col text-[var(--r-theme)] bg-gray-100 rounded-lg p-4 mb-8`}>
         <div class="mg-6">{item}</div>
         <div>
@@ -61,7 +61,7 @@ const items = [
 
 <script>
   import Macy from 'macy';
-  var macyInstance = Macy({
+  Macy({
     // See below for all available options.
     container: '.waterfall-container',
     trueOrder: false,

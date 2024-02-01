@@ -25,6 +25,7 @@ export default function CopyIcon({
       el.value = copyString || "";
       document.body.appendChild(el);
       el.select();
+      // @ts-ignore
       document.execCommand("copy");
       el.remove();
     } catch (error) {

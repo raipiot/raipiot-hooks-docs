@@ -1,5 +1,3 @@
-import type { APIRoute } from "astro";
-
 const hooks = [
   "useClickAway",
   "useQuery",
@@ -42,23 +40,18 @@ const hooks = [
   "useThousand",
   "useThousand",
   "useThousand",
-  "useThousand",
+  "useThousand"
 ];
-
-export const GET: APIRoute = ({ params }) => {
+const GET = ({ params }) => {
   const { name } = params;
   return new Response(
     JSON.stringify({
-      description: `This is the description for ${name}`,
+      description: `This is the description for ${name}`
     })
   );
 };
-
-export function getStaticPaths() {
-  // return [
-  //   { params: { id: "0" } },
-  //   { params: { id: "1" } },
-  //   { params: { id: "2" } },
-  // ];
+function getStaticPaths() {
   return hooks.map((hook) => ({ params: { name: hook } }));
 }
+
+export { GET, getStaticPaths };
