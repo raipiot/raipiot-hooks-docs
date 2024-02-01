@@ -1,0 +1,78 @@
+---
+const items = [
+  "useClickAway",
+  "useQuery",
+  "useOnce",
+  "useMap",
+  "useDefault",
+  "useFavicon",
+  "useTool",
+  "useTitle",
+  "useToggle",
+  "useTimeout",
+  "useThrottle",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useTheme",
+  "useThrottleFn",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useClickAway",
+  "useQuery",
+  "useOnce",
+  "useMap",
+  "useDefault",
+  "useFavicon",
+  "useTool",
+  "useTitle",
+  "useToggle",
+  "useTimeout",
+  "useThrottle",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useTheme",
+  "useThrottleFn",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+];
+---
+
+<div class="p-4 max-w-[1200px] mx-auto waterfall-container">
+  {
+    items.map((item, idx) => (
+      <div class={`flex flex-col text-[var(--r-theme)] bg-gray-100 rounded-lg p-4 mb-8`}>
+        <div class="mg-6">{item}</div>
+        <div>
+          {`Track and manage the visibility of your DOM elements within the viewport with
+          uselntersectionObserver.`.slice(0, Math.random() * 100)}
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  import Macy from 'macy';
+  var macyInstance = Macy({
+    // See below for all available options.
+    container: '.waterfall-container',
+    trueOrder: false,
+      waitForImages: false,
+      margin: 24,
+      columns: 4,
+      breakAt: {
+          1200: 4,
+          940: 3,
+          520: 2,
+          400: 1
+      }
+  });
+</script>

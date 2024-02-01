@@ -1,0 +1,145 @@
+---
+const items = [
+  "useClickAway",
+  "useQuery",
+  "useOnce",
+  "useMap",
+  "useDefault",
+  "useFavicon",
+  "useTool",
+  "useTitle",
+  "useToggle",
+  "useTimeout",
+  "useThrottle",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useTheme",
+  "useThrottleFn",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useClickAway",
+  "useQuery",
+  "useOnce",
+  "useMap",
+  "useDefault",
+  "useFavicon",
+  "useTool",
+  "useTitle",
+  "useToggle",
+  "useTimeout",
+  "useThrottle",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useTheme",
+  "useThrottleFn",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+  "useThousand",
+];
+---
+
+<div
+  class="px-4 py-16 max-w-[1220px] mx-auto flex flex-col gap-8"
+  id="scroll-items"
+>
+  <div class="w-full overflow-hidden flex flex-unwrap">
+    <ul class="flex items-center gap-4 animate-scrollLoop hover:animate-pause">
+      {
+        items
+          .filter((_, i) => i % 2 !== 0)
+          .map((item) => (
+            <li class="cursor-pointer inline-block p-1 px-2 rounded-md bg-sky-700 border-b-4 border-sky-400">
+              <a href={`/hooks/${item}`}>{item}</a>
+            </li>
+          ))
+      }
+    </ul>
+    <ul
+      class="flex items-center w-full overflow-hidden gap-4 animate-scrollLoop"
+    >
+      {
+        items
+          .filter((_, i) => i % 2 !== 0)
+          .map((item) => (
+            <li class="cursor-pointer inline-block p-1 px-2 rounded-md bg-sky-700 border-b-4 border-sky-400">
+              <a href={`/hooks/${item}`}>{item}</a>
+            </li>
+          ))
+      }
+    </ul>
+  </div>
+
+  <div class="w-full overflow-hidden flex flex-unwrap">
+    <ul
+      class="flex items-center gap-4 animate-scrollLoop animate-reverse hover:animate-pause"
+    >
+      {
+        items
+          .reverse()
+          .filter((_, i) => i % 2 === 0)
+          .map((item) => (
+            <li class="cursor-pointer inline-block p-1 px-2 rounded-md bg-sky-700 border-b-4 border-sky-400">
+              <a href={`/hooks/${item}`}>{item}</a>
+            </li>
+          ))
+      }
+    </ul>
+    <ul
+      class="flex items-center w-full overflow-hidden gap-4 animate-reverse animate-scrollLoop"
+    >
+      {
+        items
+          .reverse()
+          .filter((_, i) => i % 2 === 0)
+          .map((item) => (
+            <li class="cursor-pointer inline-block p-1 px-2 rounded-md bg-sky-700 border-b-4 border-sky-400">
+              <a href={`/hooks/${item}`}>{item}</a>
+            </li>
+          ))
+      }
+    </ul>
+  </div>
+</div>
+
+<script>
+  const items = document.querySelectorAll(
+    "#scroll-items .animate-scrollLoop li"
+  );
+  const tooltips: HTMLDivElement[] = [];
+  items.forEach((item) => {
+    item.addEventListener("mouseenter", (event) => {
+      const x = (event as MouseEvent).clientX;
+      const y = (event as MouseEvent).clientY;
+      const tooltip = document.createElement("div");
+      tooltip.className = "fixed p-2 bg-gray-800 text-white rounded-md";
+      tooltip.style.left = `${x}px`;
+      tooltip.style.bottom = `${window.innerHeight - y}px`;
+      tooltip.style.zIndex = "9999";
+      tooltip.style.maxWidth = "200px";
+      tooltip.textContent =
+        item.textContent?.repeat(4) ?? "DESCRIPTION NOT FOUND.";
+      document.body.appendChild(tooltip);
+      tooltips.push(tooltip);
+    });
+    item.addEventListener("mousemove", (event) => {
+      // get the position of the mouse cursor
+      const x = (event as MouseEvent).clientX;
+      const y = (event as MouseEvent).clientY;
+      const tooltip = tooltips[tooltips.length - 1];
+      tooltip.style.left = `${x}px`;
+      tooltip.style.bottom = `${window.innerHeight - y}px`;
+    });
+    item.addEventListener("mouseleave", () => {
+      tooltips.forEach((tooltip) => {
+        tooltip.remove();
+      });
+    });
+  });
+</script>

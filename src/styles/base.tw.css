@@ -1,0 +1,5 @@
+/* 集成的默认注入的 base.css 文件 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
