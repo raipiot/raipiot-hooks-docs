@@ -3,10 +3,10 @@ const { hooks } = Astro.props
 ---
 
 <div>
-<ul>
+<ul class="p-2">
   {
     hooks.map(hook => (
-      <li>
+      <li class="px-2 py-2 mb-2 bg-[var(--r-theme)]">
         <a href={`/hooks/${hook}`}>{hook}</a>
       </li>
     ))
