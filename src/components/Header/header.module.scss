@@ -14,5 +14,10 @@
   }
   a:hover::after {
     width: 100%;
-  }  
+  }
+  a {
+    display: flex;
+    gap: 1px;
+    align-items: center;
+  }
 }

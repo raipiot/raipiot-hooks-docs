@@ -1,6 +1,8 @@
 ---
 import CodeGay from "~/assets/images/code-gay.svg";
 import CopyIcon from "~/components/CopyIcon/CopyIcon.tsx";
+import { installCommand, packageInfo } from "~/config";
+import InstallCommand from "./InstallCommand.astro";
 ---
 
 <div
@@ -8,13 +10,13 @@ import CopyIcon from "~/components/CopyIcon/CopyIcon.tsx";
 >
   <div class="px-4 sm:px-8">
     <div class="text-5xl mb-8">
-      Make React development easier with common <span
-        class="text-sky-500 font-bold">react hooks</span
+      Make web development easier with <span
+        class="font-bold text-6xl bg-gradient-to-r from-sky-600 via-green-400 to-indigo-300 inline-block text-transparent bg-clip-text">{packageInfo.name}</span
       >
+      <span class="text-sm opacity-50">{packageInfo.version}</span>
     </div>
     <div class="text-gray-200">
-      Continuously refine reusable React hooks code and extract common logic,
-      making it easier for developers to write React Hooks
+      {packageInfo.description}
     </div>
     <div
       class="my-12 flex justify-center sm:float-end group relative overflow-hidden"
@@ -22,16 +24,10 @@ import CopyIcon from "~/components/CopyIcon/CopyIcon.tsx";
       <div
         class="text-white rounded-tl-[18px] border-b-[3px] border-b-transparent flex items-center gap-2 rounded-br-xl text-md bg-sky-500 p-2.5 md:px-4 text-[var(--r-theme)] hover:scale-100 transition-all"
       >
-        <span class="text-gray-100 zpix font-bold">$</span>
-        <span class="sm:pr-4">pnpm install @raipiot/reactHooks</span>
-        <CopyIcon
-          client:only="react"
-          copyString="pnpm install @raipiot/reactHooks"
-          holdTime={1233}
-        />
+        <InstallCommand />
       </div>
       <div
-        class="block rounded-br-xl group-hover:inline-block w-[99%] h-1 absolute bottom-0 left-0 group-hover:h-2 group-hover:w-full transition-all bg-sky-700"
+        class="!hidden sm:!block rounded-br-xl group-hover:inline-block w-[99%] h-1 absolute bottom-0 left-0 group-hover:h-2 group-hover:w-full transition-all bg-sky-700"
       >
       </div>
     </div>

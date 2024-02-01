@@ -1,0 +1,17 @@
+---
+const { hooks } = Astro.props
+---
+
+<div>
+<ul>
+  {
+    hooks.map(hook => (
+      <li>
+        <a href={`/hooks/${hook}`}>{hook}</a>
+      </li>
+    ))
+  }
+
+</ul>
+
+</div>

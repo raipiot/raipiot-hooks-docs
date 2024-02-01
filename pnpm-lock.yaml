@@ -46,6 +46,9 @@ dependencies:
     version: 0.18.3(@svgr/core@8.1.0)
 
 devDependencies:
+  '@faker-js/faker':
+    specifier: ^8.4.0
+    version: 8.4.0
   '@svgr/core':
     specifier: ^8.1.0
     version: 8.1.0(typescript@5.3.3)
@@ -718,6 +721,11 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /@faker-js/faker@8.4.0:
+    resolution: {integrity: sha512-htW87352wzUCdX1jyUQocUcmAaFqcR/w082EC8iP/gtkF0K+aKcBp0hR5Arb7dzR8tQ1TrhE9DNa5EbJELm84w==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+    dev: true
 
   /@iconify/json@2.2.176:
     resolution: {integrity: sha512-Pw1MA57OZdzyrJgGHzZXVnoht8vndv4aM6I3xj4SeimF14HA3e101Ignnlw2h/+Yjujf43jH7doPIVAhgCTFMw==}

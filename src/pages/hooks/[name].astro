@@ -1,0 +1,57 @@
+---
+import Layout from "~/layouts/Layout.astro";
+import Menu from "~/components/HookDetailPage/Menu.astro";
+import Title from "~/components/HookDetailPage/Title.astro";
+import CopyIcon from "~/components/CopyIcon/CopyIcon";
+import { installCommand } from "~/config";
+import InstallCommand from "~/components/Homepage/Introduction/InstallCommand.astro";
+
+const { name } = Astro.params;
+
+export async function getStaticPaths() {
+  const hooks = await Astro.glob("../../doc/*.mdx");
+  const hookNameList = hooks.map((i) =>
+    i.url.replace(/^.*\//, "").replace(/\..*$/, "")
+  );
+  return hookNameList.map((name) => ({
+    params: {
+      name,
+    },
+  }));
+}
+
+const hooks = await Astro.glob("../../doc/*.mdx");
+const hookNameList = hooks.map((i) =>
+  i.url.replace(/^.*\//, "").replace(/\..*$/, "")
+);
+const hookItem = hooks.find((i) => i.url.endsWith(name + ".mdx"));
+const Content = hookItem.Content;
+
+export const prerender = true;
+---
+
+<Layout title={`${name} - raipiot awesome hooks doc`}>
+  <div
+    class="mx-auto max-w-[1400px] grid grid-cols-[220px_auto_400px] items-stretch gap-2"
+  >
+    <div class="bg-cyan-100/10 col-span-3 sm:col-span-1">
+      <Menu hooks={hookNameList} />
+    </div>
+    <div
+      class="col-span-3 sm:col-span-2 xl:col-span-1 bg-indigo-400/10 p-2 md:p-4"
+    >
+      <div class="text-sky-500 hover:text-sky-600 font-bold text-3xl">
+        {name}
+      </div>
+      <p class="p-2 py-4">{hookItem.frontmatter.intro}</p>
+      <Title title="Install" />
+      <div
+        class="flex items-center bg-[#1f1d1d] p-3 px-3.5 rounded-sm gap-1 mb-8"
+      >
+        <InstallCommand />
+      </div>
+      <Content />
+    </div>
+    <div class="col-span-3 xl:col-span-1 bg-gray-800 min-h-[500px]">aside</div>
+  </div>
+</Layout>

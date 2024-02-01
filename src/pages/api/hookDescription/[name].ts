@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { faker } from "@faker-js/faker";
 
 const hooks = [
   "useClickAway",
@@ -49,7 +50,9 @@ export const GET: APIRoute = ({ params }) => {
   const { name } = params;
   return new Response(
     JSON.stringify({
-      description: `This is the description for ${name}`,
+      description: `This is ${name} hook.${faker.word.words(
+        Math.floor(Math.random() * 20)
+      )}`,
     })
   );
 };
