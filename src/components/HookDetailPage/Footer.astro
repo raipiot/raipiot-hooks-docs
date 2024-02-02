@@ -1,0 +1,48 @@
+<div>
+  <div
+    class="flex flex-wrap items-center gap-4 justify-center my-12 rounded-full px-2 py-1 zpix bg-gradient-to-br from-blue-700 to-sky-800 w-max mx-auto"
+  >
+    <div class="flex items-center gap-2 emoji-list cursor-pointer">
+      <img src="/emoji/erm.svg" />
+      <span class="counts text-sm">23</span>
+    </div>
+    <div class="flex items-center gap-2 emoji-list cursor-pointer">
+      <img src="/emoji/kiss.svg" />
+      <span class="counts text-sm">1</span>
+    </div>
+    <div class="flex items-center gap-2 emoji-list cursor-pointer">
+      <img src="/emoji/tears.svg" />
+      <span class="counts text-sm">33</span>
+    </div>
+    <div class="flex items-center gap-2 emoji-list cursor-pointer">
+      <img src="/emoji/smile.svg" />
+      <span class="counts text-sm">12</span>
+    </div>
+  </div>
+  <div class="mb-24"></div>
+</div>
+
+<script>
+  const emojiList = document.querySelectorAll(".emoji-list");
+  emojiList?.forEach((emoji) => {
+    emoji.addEventListener("click", () => {
+      emoji.classList.toggle("text-sky-500");
+    });
+  });
+</script>
+
+<style lang="scss">
+  .emoji-list {
+    padding: 4px;
+    border-radius: 3px;
+    min-width: 48px;
+    transition: all 0.3s ease;
+    &:hover {
+      transform: scale(1.2);
+    }
+    img {
+      background-color: transparent;
+      width: 1.5rem;
+    }
+  }
+</style>

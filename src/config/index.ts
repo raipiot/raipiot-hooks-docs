@@ -17,4 +17,5 @@ export const packageInfo = {
   version: "v0.0.1",
   description:
     "Continuously refine reusable web hooks code and extract common logic, making it easier for developers to write web hooks",
+  keywords: ["react", "hooks", "webhooks", "vue", "frontend"],
 };

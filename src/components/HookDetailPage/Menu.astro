@@ -1,17 +1,40 @@
 ---
-const { hooks } = Astro.props
+const { hooks } = Astro.props;
+const { name } = Astro.params;
 ---
 
-<div>
-<ul class="p-2">
+<ul
+  class="border-cyan-100 border fixed top-[360px] right-[calc(50vw + (50vw - 360px))] w-[200px] hidden lg:block"
+>
   {
-    hooks.map(hook => (
-      <li class="px-2 py-2 mb-2 bg-[var(--r-theme)]">
-        <a href={`/hooks/${hook}`}>{hook}</a>
+    hooks.map((hook) => (
+      <li
+        class:list={[
+          "px-2 bg-[var(--r-theme)] grid grid-cols-[12px_auto] gap-[4px]",
+          {
+            "before:!opacity-100": name === hook,
+          },
+        ]}
+      >
+        <a class="truncate" title={hook} href={`/hooks/${hook}`}>
+          {hook}
+        </a>
       </li>
     ))
   }
-
 </ul>
 
-</div>
+<style lang="scss">
+  ul {
+    li {
+      &::before {
+        content: ">";
+        color: cyan;
+        opacity: 0;
+      }
+      &:hover::before {
+        opacity: 1;
+      }
+    }
+  }
+</style>

@@ -1,0 +1,26 @@
+---
+const { headings } = Astro.props;
+---
+
+<aside
+  id="content-aside"
+  class="border border-cyan-300 fixed w-[200px] top-[360px] hidden lg:block"
+  style="left: calc(50vw + 360px)"
+>
+  {
+    headings.length > 0 && (
+      <ul class="list-none p-2 pl-4 text-sky-400">
+        {headings.map((i) => (
+          <li
+            class="truncate relative my-1 text-sm transition-opacity"
+            style={{
+              paddingLeft: `${(i.depth - 1) * 12}px`,
+            }}
+          >
+            <a href={`#${i.text}`}>{i.text}</a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</aside>

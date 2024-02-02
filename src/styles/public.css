@@ -1,0 +1,45 @@
+:root {
+  --accent: 136, 58, 234;
+  --accent-light: 224, 204, 250;
+  --accent-dark: 49, 10, 101;
+  --accent-gradient: linear-gradient(
+    45deg,
+    rgb(var(--accent)),
+    rgb(var(--accent-light)) 30%,
+    white 60%
+  );
+  --r-fff: #dfdfdf;
+  --r-theme: #282d3c;
+}
+/* font */
+@font-face {
+  font-family: zpix;
+  src: url("/fonts/zpix.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+html {
+  font-family: system-ui, sans-serif;
+  background-color: var(--r-theme);
+  /* background-image: repeating-linear-gradient(to right,#eeeeee10,#33333310 1px,transparent 1px,transparent 40px),repeating-linear-gradient(to bottom,#eeeeee10,#33333310 1px,transparent 1px,transparent 40px);		 */
+  color: var(--r-fff);
+  background-image: url("/bg.svg");
+  background-repeat: repeat;
+  scroll-behavior: smooth;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+h1,h2,h3,h4,h5 {
+  color: #fff;
+}
+.zpix {
+  font-family: zpix, system-ui, sans-serif;
+}
+code {
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
+}

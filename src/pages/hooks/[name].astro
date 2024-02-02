@@ -1,14 +1,17 @@
 ---
-import Layout from "~/layouts/Layout.astro";
+import Layout from "~/layouts/HooksLayout.astro";
 import Menu from "~/components/HookDetailPage/Menu.astro";
 import Title from "~/components/HookDetailPage/Title.astro";
+import Footer from "~/components/HookDetailPage/Footer.astro";
+
 import InstallCommand from "~/components/Homepage/Introduction/InstallCommand.astro";
 import "~/styles/markdown.css";
+import ContentTable from "~/components/HookDetailPage/ContentTable.astro";
 
 const { name } = Astro.params;
 
 export async function getStaticPaths() {
-  const hooks = await Astro.glob("../../doc/*.mdx");
+  const hooks = await Astro.glob("../../content/*.mdx");
   const hookNameList = hooks.map((i) =>
     i.url.replace(/^.*\//, "").replace(/\..*$/, "")
   );
@@ -19,42 +22,60 @@ export async function getStaticPaths() {
   }));
 }
 
-const hooks = await Astro.glob("../../doc/*.mdx");
+const hooks = await Astro.glob("../../content/*.mdx");
 const hookNameList = hooks.map((i) =>
   i.url.replace(/^.*\//, "").replace(/\..*$/, "")
 );
 const hookItem = hooks.find((i) => i.url.endsWith(name + ".mdx"));
 const Content = hookItem.Content;
-
+const headings = await hookItem.getHeadings();
 export const prerender = true;
 ---
 
-<Layout title={`${name} - raipiot awesome hooks doc`}>
-  <div
-    class="mx-auto max-w-[1400px] grid grid-cols-[220px_auto_400px] items-stretch gap-2"
-  >
-    <div class="bg-cyan-100/10 col-span-3 sm:col-span-1">
-      <Menu hooks={hookNameList} />
+<div class="mx-auto w-full max-w-[1200px] p-4 bg-[var(--r-theme)] relative shadow-gray-700 shadow-inner">
+  <Menu
+    hooks={hookNameList}
+  />
+  <ContentTable headings={headings} />
+  <Layout title={`${name} - raipiot awesome hooks doc`}>
+    <div class="">
+      <div class="max-w-[720px] w-full mx-auto border border-yellow-400">
+        <div class="p-4">
+          <div class="text-sky-500 hover:text-sky-600 font-bold text-3xl">
+            {name}
+          </div>
+          <p class="p-2 py-6">{hookItem.frontmatter.intro}</p>
+          <Title title="Install" />
+          <div
+            class="flex items-center bg-[#1f1d1d] p-3 px-3.5 rounded-sm gap-1"
+          >
+            <InstallCommand />
+          </div>
+        </div>
+        <div class="markdown-body p-4 max-w-[672px]">
+          <Content />
+          <Footer />
+        </div>
+      </div>
     </div>
-    <div
-      class="col-span-3 sm:col-span-2 xl:col-span-1 bg-indigo-400/10"
-    >
-      <div class="p-4">
-        <div class="text-sky-500 hover:text-sky-600 font-bold text-3xl">
-        {name}
-      </div>
-      <p class="p-2 py-6">{hookItem.frontmatter.intro}</p>
-      <Title title="Install" />
-      <div
-        class="flex items-center bg-[#1f1d1d] p-3 px-3.5 rounded-sm gap-1"
-      >
-        <InstallCommand />
-      </div>
-      </div>
-      <div class="markdown-body p-4">
-        <Content />
-      </div>
-    </div>
-    <div class="col-span-3 xl:col-span-1 bg-gray-800 min-h-[500px]">aside</div>
-  </div>
-</Layout>
+  </Layout>
+</div>
+
+<script>
+  const list = document.querySelectorAll("#content-aside ul li");
+  list?.forEach((li) => {
+    li.addEventListener("mouseenter", () => {
+      [...list]
+        .filter((i) => i !== li)
+        .forEach((i) => {
+          (i as HTMLElement).style.opacity = "0.2";
+        });
+      (li as HTMLElement).style.opacity = "1";
+    });
+    li.addEventListener("mouseleave", () => {
+      list.forEach((i) => {
+        (i as HTMLElement).style.opacity = "1";
+      });
+    });
+  });
+</script>
