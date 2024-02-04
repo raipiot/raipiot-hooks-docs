@@ -1,21 +1,39 @@
 ---
-import { teamMembers } from "~/config"
+import { teamMembers } from "~/config";
+import Subscription from "~/components/Subscription/index.astro";
 ---
 
-<div class="bg-gray-800/0 p-4">
-  <div class="w-full items-center flex-wrap max-w-[1200px] mx-auto p-4 gap-1">
-    <h3 class="text-2xl font-bold text-center">Contributors <span class="rounded-full text-sm bg-sky-500 relative bottom-2 px-1 text-white">{teamMembers.length}<span></h3>
-    <div class="flex justify-center m-2 mt-4 gap-1">
-    { 
-      teamMembers.map(member => 
-        <a href={member.github} class="">
-          <img src={member.avatar} alt={member.name} class="w-8 h-8 rounded-full">
-        </a>
-      )
-    }
-    </div>  
-  </div>
-  <div class="flex justify-center">
-    Power by <a href="https://www.raipiot.com" class="pl-1 bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">raipiot frontend team</a>
+<div class="p-4 pt-[120px]">
+  <div class="flex flex-wrap justify-center gap-12">
+    <div>
+      <div
+        class="w-full items-center flex-wrap max-w-[1200px] mx-auto p-4 gap-1"
+      >
+        <h3 class="text-2xl font-bold text-center">
+          <div>Contributors</div>
+          <div class="flex justify-center m-2 mt-4 gap-1">
+            {
+              teamMembers.map((member) => (
+                <a href={member.github} class="">
+                  <img
+                    src={member.avatar}
+                    alt={member.name}
+                    class="w-8 h-8 rounded-full"
+                  />
+                </a>
+              ))
+            }
+          </div>
+        </h3>
+        <div class="flex justify-center">
+          Power by <a
+            href="https://www.raipiot.com"
+            class="pl-1 bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text"
+            >raipiot frontend team</a
+          >
+        </div>
+      </div>
+    </div>
+    <Subscription />
   </div>
 </div>

@@ -1,0 +1,58 @@
+---
+import SubscriptionIcon from "~icons/mdi-light/rss";
+---
+
+<div
+  class="max-w-[360px] sm:flex hidden flex-col gap-4 border border-gray-900 p-4 rounded-sm shadow-gray-50 bg-gray-900"
+>
+  <div class="text-2xl">Keep following us</div>
+  <p>We will send you an email after each update.</p>
+  <div class="flex gap-2 w-full relative">
+    <input
+      type="email"
+      class="w-full block p-2 border text-sky-600 border-none outline-none rounded-md"
+      placeholder="Your email"
+    />
+    <button
+      id="subscription-button"
+      class="text-sky-700 absolute right-[4px] top-[50%] translate-y-[-50%] cursor-pointer"
+    >
+      <SubscriptionIcon
+        style={{
+          cursor: "pointer",
+        }}
+      />
+    </button>
+  </div>
+</div>
+
+<script>
+  const subscriptionButton = document.getElementById("subscription-button");
+  import { request } from "~/utils/request";
+  subscriptionButton?.addEventListener("click", () => {
+    const email = subscriptionButton.previousElementSibling["value"];
+    if (email) {
+      // fetch("https://api.sendgrid.com/v3/marketing/contacts", {
+      //   method: "PUT",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`,
+      //   },
+      //   body: JSON.stringify({
+      //     contacts: [
+      //       {
+      //         email,
+      //       },
+      //     ],
+      //   }),
+      request("/api/subscribe", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+        }),
+      }).then((data) => {
+        console.log(data);
+      });
+    }
+  });
+</script>

@@ -117,9 +117,19 @@ const items = [
   let isLoading = false;
   let isErrored = false;
 
+  const clear = () => {
+      tooltips.forEach((tooltip) => {
+        tooltip.remove();
+      });
+      tooltips.length = 0;
+      isErrored = false;
+      isLoading = false;
+    }
+
   items.forEach((item) => {
     item.addEventListener("mouseenter", async (event) => {
       if (isLoading) return;
+      clear();
       try {
         isLoading = true;
         const { description } = await request(`/api/hookDescription/${item.textContent?.trim()}`);
@@ -155,14 +165,7 @@ const items = [
       tooltip.style.left = `${window.innerWidth - x < 400 ? x - 200 : x - 100}px`;
       tooltip.style.bottom = `${window.innerHeight - y + 20}px`;
     });
-    item.addEventListener("mouseleave", () => {
-      tooltips.forEach((tooltip) => {
-        tooltip.remove();
-      });
-      tooltips.length = 0;
-      isErrored = false;
-      isLoading = false;
-    });
+    item.addEventListener("mouseleave", clear);
   });
 </script>
 

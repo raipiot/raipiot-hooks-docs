@@ -4,13 +4,13 @@ const { name } = Astro.params;
 ---
 
 <ul
-  class="border-cyan-100 border fixed top-[360px] right-[calc(50vw + (50vw - 360px))] w-[200px] hidden lg:block"
+  class="fixed top-[360px] right-[calc(50vw + (50vw - 360px))] w-[200px] hidden lg:block bg-gray-900/70 rounded-md shadow-md py-2"
 >
   {
     hooks.map((hook) => (
       <li
         class:list={[
-          "px-2 bg-[var(--r-theme)] grid grid-cols-[12px_auto] gap-[4px]",
+          "px-2 grid grid-cols-[12px_auto] gap-[4px]",
           {
             "before:!opacity-100": name === hook,
           },
@@ -26,6 +26,8 @@ const { name } = Astro.params;
 
 <style lang="scss">
   ul {
+    max-height: calc(100vh - 600px);
+    overflow-y: auto;
     li {
       &::before {
         content: ">";

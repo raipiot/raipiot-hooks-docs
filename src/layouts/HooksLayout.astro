@@ -8,6 +8,8 @@ import Header from "~/components/Header/Header.astro";
 import { packageInfo } from "~/config";
 import "~/styles/base.tw.css";
 import "~/styles/public.css";
+import { Toaster } from 'react-hot-toast';
+
 ---
 
 <!doctype html>
@@ -25,5 +27,7 @@ import "~/styles/public.css";
     <div class="flex-grow mb-auto">
       <slot />
     </div>
+		<Toaster client:only="react" />
+
   </body>
 </html>

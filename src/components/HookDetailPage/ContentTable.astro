@@ -4,9 +4,10 @@ const { headings } = Astro.props;
 
 <aside
   id="content-aside"
-  class="border border-cyan-300 fixed w-[200px] top-[360px] hidden lg:block"
+  class="fixed w-[200px] top-[360px] hidden lg:block bg-gray-900/70 rounded-md shadow-md"
   style="left: calc(50vw + 360px)"
 >
+  <div class="p-4 pb-0">Content Navigation</div>
   {
     headings.length > 0 && (
       <ul class="list-none p-2 pl-4 text-sky-400">
@@ -17,7 +18,7 @@ const { headings } = Astro.props;
               paddingLeft: `${(i.depth - 1) * 12}px`,
             }}
           >
-            <a href={`#${i.text}`}>{i.text}</a>
+            <a href={`#${i.slug}`}>{i.text}</a>
           </li>
         ))}
       </ul>
