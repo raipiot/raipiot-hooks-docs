@@ -1,6 +1,9 @@
 import type { APIRoute } from "astro";
 import sgMail from "@sendgrid/mail";
 import { isEmail } from "~/utils/verify";
+import { initSupubaseClient } from "~/utils/supubase";
+import { formatExpireData } from "~/utils/date";
+import { getRandomString } from "~/utils/generate";
 
 const rawHtml = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
@@ -103,7 +106,7 @@ a[x-apple-data-detectors] {
                       <td align="center" style="padding:0;Margin:0;padding-bottom:5px;padding-top:10px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">If you did not register with us, please disregard this email.</p></td>
                      </tr>
                      <tr>
-                      <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px"><span class="es-button-border" style="border-style:solid;border-color:#2CB543;background:#5C68E2;border-width:0px;display:inline-block;border-radius:6px;width:auto"><a href="https://raipiot-awesome-hooks.netlify.app/api/subscribe/confirm?email={_}" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;padding:10px 30px 10px 30px;display:inline-block;background:#5C68E2;border-radius:6px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;mso-padding-alt:0;mso-border-alt:10px solid #5C68E2;padding-left:30px;padding-right:30px">CONFIRM YOUR EMAIL</a></span></td>
+                      <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:10px"><span class="es-button-border" style="border-style:solid;border-color:#2CB543;background:#5C68E2;border-width:0px;display:inline-block;border-radius:6px;width:auto"><a href="https://raipiot-awesome-hooks.netlify.app/api/subscribe/confirm?token={_}" class="es-button" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#FFFFFF;font-size:20px;padding:10px 30px 10px 30px;display:inline-block;background:#5C68E2;border-radius:6px;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-weight:normal;font-style:normal;line-height:24px;width:auto;text-align:center;mso-padding-alt:0;mso-border-alt:10px solid #5C68E2;padding-left:30px;padding-right:30px">CONFIRM YOUR EMAIL</a></span></td>
                      </tr>
                      <tr>
                       <td align="center" class="es-m-p0r es-m-p0l" style="Margin:0;padding-top:5px;padding-bottom:5px;padding-left:40px;padding-right:40px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px">Once confirmed, this email will be uniquely associated with your account.</p></td>
@@ -126,7 +129,7 @@ a[x-apple-data-detectors] {
                   <td align="center" valign="top" style="padding:0;Margin:0;width:560px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr>
-                      <td align="center" class="es-infoblock" style="padding:0;Margin:0;line-height:14px;font-size:12px;color:#CCCCCC"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:14px;color:#CCCCCC;font-size:12px"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#CCCCCC;font-size:12px"></a>No longer want to receive these emails?&nbsp;<a href="https://raipiot-awesome-hooks.netlify.app/api/subscribe/unsubscribe?email={_}" target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#CCCCCC;font-size:12px">Unsubscribe</a>.<a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#CCCCCC;font-size:12px"></a></p></td>
+                      <td align="center" class="es-infoblock" style="padding:0;Margin:0;line-height:14px;font-size:12px;color:#CCCCCC"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:14px;color:#CCCCCC;font-size:12px"><a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#CCCCCC;font-size:12px"></a>No longer want to receive these emails?&nbsp;<a href="https://raipiot-awesome-hooks.netlify.app/subscribe/unsubscribe?token={_}" target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#CCCCCC;font-size:12px">Unsubscribe</a>.<a target="_blank" href="" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color:#CCCCCC;font-size:12px"></a></p></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -149,15 +152,55 @@ export const POST: APIRoute = async ({ request }) => {
     }
     // send email with send grid
     console.log(`Sending email to ${email}`);
+
+    // check if email is already subscribed
+    const supubase = initSupubaseClient();
+    const record = await supubase
+      .from("subscribers")
+      .select("*")
+      .eq("email", email)
+      .gte("created_at", formatExpireData(new Date()));
+    if (record.error) {
+      return new Response("query failed", { status: 500 });
+    }
+    if (record.data.length > 0) {
+      if (record.data[0].is_confirmed === true) {
+        return new Response("Your email already subscribed", { status: 400 });
+      } else {
+        return new Response(
+          "Email already sent to you, please check your email to confirm it.",
+          { status: 400 }
+        );
+      }
+    }
+    console.log("record", record);
     const message = {
       to: email,
       from: "rivenqinyy@gmail.com",
       subject: "Subscribe Info",
-      html: rawHtml.replaceAll("{_}", email),
+      html: rawHtml.replaceAll(
+        "{_}",
+        `${getRandomString(2)}${btoa(email)}${getRandomString(2)}`
+      ),
     };
     sgMail.setApiKey(import.meta.env.SECRET_SG_SECRET);
     await sgMail.send(message);
-    return new Response();
+    // create a new record in the database
+    const { error } = await supubase
+      .from("subscribers")
+      .upsert([{ email, created_at: formatExpireData(new Date()) }], {
+        onConflict: "email",
+      });
+    if (error) {
+      console.log("error", error);
+      return new Response(
+        "Sorry, we can not send the confirm email now.Please try it later.",
+        { status: 500 }
+      );
+    }
+    return new Response(
+      JSON.stringify({ message: "Confirm email was sent 🎉." })
+    );
   } catch (error) {
     console.log("send email failed:", error);
     return new Response("send email failed", { status: 500 });

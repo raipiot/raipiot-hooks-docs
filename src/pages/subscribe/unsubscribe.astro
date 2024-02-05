@@ -1,0 +1,42 @@
+---
+import Layout from "../../layouts/HooksLayout.astro";
+const token = Astro.url.searchParams.getAll("token");
+---
+
+<Layout title="Welcome to subscribe to our latest web hooks content - rp-hooks">
+  <div
+    class="flex flex-col justify-center items-center gap-4 my-12"
+    data-token={token}
+  >
+    <img
+      src="/sad.svg"
+      alt="subscribe"
+      style={{
+        maxWidth: "90vw",
+        width: "400px",
+        margin: "120px 0",
+      }}
+      class="animate-verticalLoop"
+    />
+    <h3 class="text-2xl">👋🏻 Bye</h3>
+    <p class="max-w-[360px] text-center p-4 pb-0">
+      Separation is to meet each other better
+    </p>
+    <a href="/" class="underline text-sky-500">Back to homepage</a>
+  </div>
+</Layout>
+
+<script>
+  import { request } from "../../utils/request";
+  import { promiseNotify } from "~/utils/notify";
+  const token = document
+    .querySelector("[data-token]")
+    ?.getAttribute("data-token");
+  if (token) {
+    const p = request("/api/subscribe/unsubscribe", {
+      method: "POST",
+      body: JSON.stringify({ token }),
+    });
+    promiseNotify(p, "Unsubscribed successfully", "Unsubscribe failed");
+  }
+</script>

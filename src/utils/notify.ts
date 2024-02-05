@@ -8,17 +8,20 @@ export const errorNotify = (message: string) => {
   toast.error(message);
 };
 
-export const promiseNotify = (
+export const promiseNotify = async <T>(
   promise: Promise<any>,
-  successMessage: string,
-  errorMessage: string
-) => {
-  return promise
-    .then(() => {
-      successNotify(successMessage);
-    })
-    .catch((error) => {
-      errorNotify(errorMessage);
-      console.error(error);
-    });
+  successMessage?: string,
+  errorMessage?: string
+): Promise<T> => {
+  toast.loading("Waiting...");
+  try {
+    const result = await promise;
+    toast.dismiss();
+    toast.success(result.message ?? successMessage);
+    return result;
+  } catch (error) {
+    toast.dismiss();
+    toast.error(errorMessage ?? error);
+    throw error;
+  }
 };

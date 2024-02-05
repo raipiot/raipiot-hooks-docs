@@ -1,0 +1,66 @@
+---
+import Layout from "../../layouts/HooksLayout.astro";
+const token = Astro.url.searchParams.get("token");
+---
+
+<Layout title="Welcome to subscribe to our latest web hooks content - rp-hooks">
+  <div class="flex flex-col justify-center items-center gap-4 my-12">
+    <img
+      src="/subscribe.svg"
+      alt="subscribe"
+      style={{
+        maxWidth: "90vw",
+        width: "600px",
+        margin: "120px 0",
+      }}
+      class="animate-verticalLoop"
+    />
+    <h3 class="text-2xl">🎉🎉🎉</h3>
+    <p class="max-w-[360px] text-center p-4">
+      Welcome to subscribe to rp - hooks document, we will send you an email
+      every time there is a new addition
+    </p>
+    <button
+      id="confirm_btn"
+      data-token={token}
+      class="text-xl text-sky-500 bg-gray-900 rounded-sm p-4 py-1"
+      style="margin-top: 24px">Comfirm</button
+    >
+  </div>
+</Layout>
+
+<script>
+  import { request } from "../../utils/request";
+  import { errorNotify, successNotify } from "~/utils/notify";
+
+  const btn = document.getElementById("confirm_btn");
+  const token = btn?.getAttribute("data-token");
+  btn?.addEventListener("click", () => {
+    btn.style.display = "none";
+    request("/api/subscribe/confirm", {
+      method: "POST",
+      body: JSON.stringify({ token }),
+    })
+      .then(() => {
+        successNotify(
+          "You have successfully subscribed to our web hooks content"
+        );
+        let time = 5;
+        const countDown = () => {
+          btn.style.display = "block";
+          btn.textContent = `Back to home page in ${time} seconds`;
+          time--;
+          if (time === 0) {
+            window.open("/", "_self");
+          }
+        };
+        setInterval(countDown, 1000);
+      })
+      .catch((err) => {
+        errorNotify(
+          "Failed to subscribe to our web hooks content now.So sorry!"
+        );
+        btn.style.display = "block";
+      });
+  });
+</script>

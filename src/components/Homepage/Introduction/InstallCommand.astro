@@ -1,13 +1,14 @@
 ---
 import CopyIcon from "~/components/CopyIcon/CopyIcon";
+import { installCommand } from "~/config";
 ---
 
 <>
   <span class="text-gray-100 zpix font-bold">$</span>
-  <span class="sm:pr-4 flex-grow">pnpm install @raipiot/reactHooks</span>
+  <span class="sm:pr-4 flex-grow">{installCommand}</span>
   <CopyIcon
     client:only="react"
-    copyString="pnpm install @raipiot/reactHooks"
+    copyString={installCommand}
     holdTime={1233}
   />
 </>

@@ -12,8 +12,12 @@ export const request = async (url: string, options?: RequestInit) => {
         options
       )
     );
+    if (resp.status !== 200) {
+      return Promise.reject(await resp.text());
+    }
     return resp.json();
   } catch (error) {
     console.error("Error fetching data", error);
+    return Promise.reject(error);
   }
 };

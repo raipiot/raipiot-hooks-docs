@@ -3,26 +3,29 @@ const { hooks } = Astro.props;
 const { name } = Astro.params;
 ---
 
-<ul
-  class="fixed top-[360px] right-[calc(50vw + (50vw - 360px))] w-[200px] hidden lg:block bg-gray-900/70 rounded-md shadow-md py-2"
->
-  {
-    hooks.map((hook) => (
-      <li
-        class:list={[
-          "px-2 grid grid-cols-[12px_auto] gap-[4px]",
-          {
-            "before:!opacity-100": name === hook,
-          },
-        ]}
-      >
-        <a class="truncate" title={hook} href={`/hooks/${hook}`}>
-          {hook}
-        </a>
-      </li>
-    ))
-  }
-</ul>
+<div class="fixed top-[360px] right-[calc(50vw + (50vw - 360px))] w-[200px] hidden lg:block rounded-md py-2">
+  <h3 class="text-white text-lg font-bold pl-4">Hooks</h3>
+  <ul
+    class=""
+  >
+    {
+      hooks.map((hook) => (
+        <li
+          class:list={[
+            "px-2 grid grid-cols-[12px_auto] gap-[4px]",
+            {
+              "before:!opacity-100": name === hook,
+            },
+          ]}
+        >
+          <a class="truncate text-sky-500" title={hook} href={`/hooks/${hook}`}>
+            {hook}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
 
 <style lang="scss">
   ul {

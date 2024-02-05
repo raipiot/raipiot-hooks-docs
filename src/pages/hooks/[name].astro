@@ -1,8 +1,7 @@
 ---
 import Layout from "~/layouts/HooksLayout.astro";
 import Menu from "~/components/HookDetailPage/Menu.astro";
-import Title from "~/components/HookDetailPage/Title.astro";
-import Footer from "~/components/HookDetailPage/Footer.astro";
+import ArticleComment from "~/components/HookDetailPage/ArticleComment.tsx";
 import Subscription from "~/components/Subscription/index.astro";
 
 import InstallCommand from "~/components/Homepage/Introduction/InstallCommand.astro";
@@ -74,9 +73,9 @@ console.log(JSON.stringify(hookItem, null, 2));
             >
             </div>
             <div class="z-10 flex flex-col justify-between">
-              <p>{hookItem.frontmatter.intro}</p>
+              <p class="line-clamp-3">{hookItem.frontmatter.intro}</p>
               <div
-                class="flex items-center bg-[#1f1d1d] p-3 px-3.5 rounded-sm gap-1 border-r border-b border-sky-700 border-t"
+                class="flex items-center bg-[#1f1d1d] p-2.5 px-3.5 rounded-sm gap-1 border-r border-b border-sky-700 border-t relative bottom-[14px]"
               >
                 <InstallCommand />
               </div>
@@ -88,7 +87,7 @@ console.log(JSON.stringify(hookItem, null, 2));
         </div>
         <div class="markdown-body p-4 max-w-[672px]">
           <Content />
-          <Footer />
+          <ArticleComment client:only="react" />
         </div>
       </div>
     </div>
